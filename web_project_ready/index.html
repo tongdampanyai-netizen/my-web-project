@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>เงินเข้าBK — Mindora</title>
+  <link rel="icon" href="assets/image/icon/D-BK.png" type="image/png" />
+  <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@300;400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/slip.css" />
+  <!-- Firebase SDK v8 (matches your original) -->
+  <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-auth.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-firestore.js"></script>
+</head>
+<body>
+  <header class="site-header">
+    <div class="container">
+      <img src="assets/image/icon/D-BK.png" alt="logo" class="logo" />
+      <h1>เงินเข้าBK <small class="muted">/ Mindora</small></h1>
+    </div>
+  </header>
+
+  <main class="container grid">
+    <section class="card">
+      <h2>ตัวอย่างสลิปเงินเข้า</h2>
+      <div class="display" id="display">
+        <canvas id="canvas" width="732" height="1280" aria-label="preview canvas"></canvas>
+        <div class="actions">
+          <button id="downloadBtn" class="btn primary">ดาวน์โหลดรูป</button>
+          <button id="saveBtn" class="btn">บันทึกไปยัง Firestore</button>
+        </div>
+      </div>
+    </section>
+
+    <aside class="card form-card">
+      <h3>ตั้งค่าสลิป</h3>
+      <form id="slipForm" class="form">
+        <label>เวลาแจ้งเตือน</label>
+        <input type="time" id="datetime_plus_one" oninput="updateDisplay()" />
+
+        <label>บัญชี</label>
+        <input type="text" id="senderaccount1" value="xxx-x-x5529-x" oninput="updateDisplay()" />
+
+        <label>จำนวนเงิน (THB)</label>
+        <input type="text" id="money01" value="30,650.00" oninput="updateDisplay()" />
+
+        <label>เวลาเงินเข้า</label>
+        <input type="datetime-local" id="datetime" oninput="updateDisplay()" />
+
+        <label>ชื่อผู้รับ</label>
+        <input type="text" id="receiver" value="บริษัท ตัวอย่าง จำกัด" oninput="updateDisplay()">
+
+        <label>โหมด</label>
+        <div class="row">
+          <button type="button" id="powerSavingMode" class="btn" onclick="togglePowerSavingMode()">โหมดประหยัดพลังงาน</button>
+        </div>
+      </form>
+
+      <div class="note muted">
+        * โปรดใส่คอนฟิก Firebase ในไฟล์ <code>app/menu2/Depositbk1.js</code> ก่อนบันทึก
+      </div>
+
+      <div class="footer-actions">
+        <button id="loginBtn" class="btn">ล็อกอิน (Firebase)</button>
+        <button id="logoutBtn" class="btn" style="display:none">ออกจากระบบ</button>
+      </div>
+    </aside>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <small>© Mindora — สร้างโดยระบบตัวอย่าง. Deploy บน GitHub Pages ได้เลย</small>
+    </div>
+  </footer>
+
+  <script src="app/menu2/Depositbk1.js"></script>
+</body>
+</html>

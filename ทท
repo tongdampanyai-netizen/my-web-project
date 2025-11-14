@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>เงินเข้า BK — Slip Generator</title>
+
+    <!-- Font -->
+    <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@300;400;600&display=swap" rel="stylesheet">
+
+    <style>
+        body {
+            margin: 0;
+            font-family: 'Kanit', sans-serif;
+            background: #f4f6f9;
+            display: flex;
+            justify-content: center;
+            padding: 30px;
+        }
+
+        .container {
+            max-width: 1050px;
+            width: 100%;
+            display: flex;
+            gap: 30px;
+        }
+
+        /* ส่วนแสดงผล Slip */
+        .display-container {
+            flex: 1;
+            background: white;
+            padding: 20px;
+            border-radius: 20px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+        }
+
+        canvas {
+            width: 100%;
+            border-radius: 12px;
+        }
+
+        .display-container button {
+            margin-top: 15px;
+            width: 100%;
+            padding: 15px;
+            background: #0d6efd;
+            border: none;
+            font-size: 17px;
+            color: white;
+            border-radius: 10px;
+            cursor: pointer;
+        }
+
+        /* ฟอร์ม */
+        .form-container {
+            width: 350px;
+            background: white;
+            padding: 25px;
+            border-radius: 20px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.08);
+        }
+
+        .form-container h1 {
+            margin-top: 0;
+            font-size: 22px;
+            color: #333;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        label {
+            font-size: 14px;
+            font-weight: 500;
+            display: block;
+            margin-bottom: 8px;
+            color: #444;
+        }
+
+        input {
+            width: 100%;
+            padding: 12px;
+            font-size: 16px;
+            border-radius: 8px;
+            border: 1px solid #ccc;
+            margin-bottom: 15px;
+        }
+
+        #powerSavingMode {
+            background: #ffcc00;
+            color: #333;
+            padding: 12px;
+            border-radius: 8px;
+            border: none;
+            width: 100%;
+            margin-bottom: 20px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="container">
+
+    <!-- ============== DISPLAY SLIP ============== -->
+    <div class="display-container">
+        <canvas id="canvas" width="732" height="1280"></canvas>
+        <button onclick="downloadImage()">บันทึกเป็นรูปภาพ</button>
+    </div>
+
+    <!-- ============== FORM INPUT ============== -->
+    <div class="form-container">
+        <h1>สร้างสลิปโอนเงิน</h1>
+
+        <label>เวลาแจ้งเตือน</label>
+        <input type="time" id="alertTime" oninput="updateDisplay()">
+
+        <button id="powerSavingMode" onclick="togglePowerSavingMode()">โหมดประหยัดพลังงาน</button>
+
+        <label>เลขบัญชี</label>
+        <input type="text" id="account" value="xxx-x-x5529-x" oninput="updateDisplay()">
+
+        <label>ยอดเงินเข้า</label>
+        <input type="text" id="amount" value="30,650.00" oninput="updateDisplay()">
+
+        <label>เวลาเงินเข้า</label>
+        <input type="datetime-local" id="datetime" oninput="updateDisplay()">
+    </div>
+
+</div>
+
+
+<script>
+    const canvas = document.getElementById("canvas");
+    const ctx = canvas.getContext("2d");
+
+    function updateDisplay() {
+        ctx.fillStyle = "#ffffff";
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+        ctx.fillStyle = "#333";
+        ctx.font = "40px Kanit";
+
+        ctx.fillText("เงินเข้า BK", 40, 100);
+        ctx.font = "30px Kanit";
+
+        ctx.fillText("บัญชี: " + document.getElementById("account").value, 40, 200);
+        ctx.fillText("ยอดเงิน: " + document.getElementById("amount").value + " บาท", 40, 270);
+        ctx.fillText("เวลาแจ้งเตือน: " + document.getElementById("alertTime").value, 40, 340);
+        ctx.fillText("เวลาเงินเข้า: " + document.getElementById("datetime").value, 40, 410);
+    }
+
+    updateDisplay();
+
+    function downloadImage() {
+        const link = document.createElement("a");
+        link.download = "slip.png";
+        link.href = canvas.toDataURL();
+        link.click();
+    }
+
+    function togglePowerSavingMode() {
+        alert("โหมดประหยัดพลังงานถูกเปิด/ปิด (ตัวอย่าง)");
+    }
+</script>
+
+</body>
+</html>
+
